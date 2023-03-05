@@ -1,11 +1,13 @@
 
 var express = require('express')
 var http = require('http')
+const cors = require('cors');
 var net = require('net');
 var child = require('child_process');
 require('log-timestamp');   //adds timestamp in console.log()
 
 var app = express();
+app.use(cors())
 app.use(express.static(__dirname + '/'));
 
 var httpServer = http.createServer(app);
