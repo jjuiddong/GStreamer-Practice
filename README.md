@@ -3,8 +3,8 @@ GStreamer Practice with VS2019 C++
 
 - Server
 	- NodeJS + GStreamer video streaming example
-	-1. NodeJs Webserver wait to request
-	-2. Webbrowser Request, NodeJs Server send local camera streaming
+	- 1. NodeJs Webserver wait to request
+	- 2. Webbrowser Request, NodeJs Server send local camera streaming
 - Test1
 	- GStreamer simple example
 - gst-docs-discontinued-for-monorepo
