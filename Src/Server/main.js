@@ -7,11 +7,14 @@ var child = require('child_process');
 require('log-timestamp');   //adds timestamp in console.log()
 
 var app = express();
-app.use(cors())
+// app.use(cors())
 app.use(express.static(__dirname + '/'));
 
 var httpServer = http.createServer(app);
 const port = 9001;  //change port number is required
+var gstMuxer = undefined
+var errCnt = 0
+var clientCnt = 0
 
 //send the html page which holds the video tag
 app.get('/', function (req, res) {
@@ -39,7 +42,21 @@ app.get('/stream', function (req, res) {
 
     var tcpServer = net.createServer(function (socket) {
         socket.on('data', function (data) {
-            res.write(data);
+            const result = res.write(data);
+            if (result == false) {
+                if (++errCnt > 2) {
+                    // console.log('write fail')
+                    // res.end()
+                    // close web browser
+                    if (gstMuxer) {
+                        // console.log('kill gstreamer')
+                        // gstMuxer.kill()
+                        // gstMuxer = undefined
+                    }
+                }
+            } else {
+                errCnt = 0
+            }
         });
         socket.on('close', function (had_error) {
             console.log('Socket closed.');
@@ -53,18 +70,22 @@ app.get('/stream', function (req, res) {
         console.log("Connection started.");
         if (gstMuxer == undefined) {
             console.log("inside gstMuxer == undefined");
-            var cmd = 'gst-launch-1.0';
-            var args = getGstPipelineArguments(this);
-            var gstMuxer = child.spawn(cmd, args);
-
-            gstMuxer.stderr.on('data', onSpawnError);
-            gstMuxer.on('exit', onSpawnExit);
-
+            // setTimeout(() => {
+                var cmd = 'gst-launch-1.0';
+                var args = getGstPipelineArguments(this);
+                gstMuxer = child.spawn(cmd, args);
+                errCnt = 0
+    
+                gstMuxer.stderr.on('data', onSpawnError);
+                gstMuxer.on('exit', onSpawnExit);
+                
+            // }, 1000);
         }
         else {
             console.log("New GST pipeline rejected because gstMuxer != undefined.");
         }
     });
+
 });
 
 httpServer.listen(port);
