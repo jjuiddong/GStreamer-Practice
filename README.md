@@ -34,11 +34,11 @@ GStreamer Practice with VS2019 C++
 - WebRTCRecvOnly
 	- reference code
 		- https://github.com/GStreamer/gstreamer/blob/main/subprojects/gst-examples/webrtc/sendonly/webrtc-recvonly-h264.c
-	- 
+
 
 - WebRTCSendOnly
 	- https://github.com/GStreamer/gstreamer/blob/main/subprojects/gst-examples/webrtc/sendonly/webrtc-unidirectional-h264.c
 	- webrtc-unidirectional-h264.cp
 	- open http server
-		- when connect browser, send camera streaming from server camera
+	- when connect browser, send camera streaming from server camera
 
