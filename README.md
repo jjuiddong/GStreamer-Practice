@@ -9,7 +9,7 @@ GStreamer Practice with VS2019 C++
 	- GStreamer simple example
 - gst-docs-discontinued-for-monorepo
 	- GStreamer tutorials
-- gstwebrtc-demos-master
+- gstwebrtc-demos
 	- https://github.com/centricular/gstwebrtc-demos
 	- webrtc signalling server example
 		- simple_server.py
